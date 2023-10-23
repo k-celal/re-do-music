@@ -7,4 +7,21 @@
     <RootNamespace>re_do_music.MVC</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Views\Brand\" />
+    <Folder Include="Views\Home\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\ReDoMusic.Persistance\ReDoMusic.Persistance.csproj" />
+  </ItemGroup>
+
 </Project>
