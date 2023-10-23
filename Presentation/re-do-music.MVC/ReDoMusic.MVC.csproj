@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -8,8 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Views\Brand\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
 
@@ -21,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\ReDoMusic.Domain\ReDoMusic.Domain.csproj" />
     <ProjectReference Include="..\..\Infrastructure\ReDoMusic.Persistance\ReDoMusic.Persistance.csproj" />
   </ItemGroup>
 
