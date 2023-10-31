@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/re_do_music.MVC.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Css", required: false)
 </head>
 <body>
     <header>
@@ -26,7 +27,29 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <ul class="navbar-nav me-0">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @User.Identity.Name
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Member" asp-action="logout">Çıkış Yap</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-success mx-2" asp-controller="home" asp-action="signup">Kayıt Ol</a>
+                        <a class="btn btn-outline-success" asp-controller="home" asp-action="signin">Giris Yap</a>
+                    }
+
+
                 </div>
+
             </div>
         </nav>
     </header>
