@@ -1,0 +1,49 @@
+﻿@using ReDoMusic.Domain.Entites
+@using ReDoMusic.Persistance.Contexts;
+@model List<Instrument>
+@inject ReDoMusicDbContext _context;
+
+<div class="container mt-3">
+    <h2>Instruments</h2>
+    <table class="table table-dark table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Brand</th>
+                <th>Models</th>
+                <th>Color</th>
+                <th>Price</th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>Delete</th>
+                }
+                else
+                {
+                    <th>Add to Cart</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var instrument in Model)
+            {
+                <tr>
+                    <th>@instrument.Name</th>
+                    <th>
+                        @instrument.Brand.Name
+                    </th>
+                    <th>@instrument.Model</th>
+                    <th>@instrument.Color</th>
+                    <th>@instrument.Price</th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td><a asp-controller="Instrument" asp-action="DeleteInstrument" asp-route-id="@instrument.Id" class="btn btn-outline-danger">Delete</a></td>
+                    }
+                    else
+                    {
+                        <td><a href="#" class="btn btn-outline-success">Add to Cart</a></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -17,7 +17,7 @@ namespace re_do_music.MVC.Controllers
 
         public IActionResult Index()
         {
-
+            
             var brands = _context.Brands.ToList();
             return View(brands);
         }

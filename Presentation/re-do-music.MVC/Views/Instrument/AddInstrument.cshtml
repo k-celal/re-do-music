@@ -1,0 +1,39 @@
+﻿@using ReDoMusic.Domain.Enums;
+@using ReDoMusic.Domain.Entites;
+@model List<Brand>
+<h2>Add Instrument</h2>
+
+<form method="post">
+    <div class="mb-3 mt-3">
+        <label class="form-label">Instrument Name:</label>
+        <input type="text" class="form-control" placeholder="Enter Instrument Name" name="instrumentName">
+    </div>
+    <div class="mb-3 mt-3">
+        <label class="form-label">Brand:</label>
+        <select class="form-select" name="instrumentBrand">
+            @foreach (var brand in Model)
+            {
+                <option value="@brand.Id">@brand.Name</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3 mt-3">
+        <label class="form-label">Model:</label>
+        <input type="text" class a form-control" placeholder="Enter Model" name="instrumentModel">
+    </div>
+    <div class="mb-3 mt-3">
+        <label class="form-label">Color:</label>
+        <select class="form-select" name="instrumentColor">
+            @foreach (var color in Enum.GetValues(typeof(Color)))
+            {
+                <option value="@color">@color</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3 mt-3">
+        <label class="form-label">Price:</label>
+        <input type="number" class="form-control" placeholder="Enter Price" name="instrumentPrice">
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
