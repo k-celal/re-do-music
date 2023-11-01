@@ -48,7 +48,9 @@ namespace re_do_music.MVC
                 {
                     policy.RequireRole("User");
                 });
+
             });
+
 
         }
 
@@ -82,6 +84,7 @@ namespace re_do_music.MVC
                     name: "default",
                     pattern: "{controller=Instrument}/{action=Index}/{id?}");
             });
+            
         }
         public static void Main(string[] args)
         {

@@ -20,6 +20,10 @@ namespace re_do_music.MVC.Controllers.Home
         {
             return View();
         }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
         public IActionResult SignUp()
         {
             return View();
@@ -52,7 +56,7 @@ namespace re_do_music.MVC.Controllers.Home
         [HttpPost]
         public async Task<IActionResult> SignIn(SignInViewModel model, string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Action("Instruments", "Index");
+            returnUrl = returnUrl ?? Url.Action("Index","Instrument" );
 
             var hasUser = await _UserManager.FindByEmailAsync(model.Email);
             if (hasUser == null)
