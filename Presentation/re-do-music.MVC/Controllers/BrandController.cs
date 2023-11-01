@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ReDoMusic.Domain.Entites;
 using ReDoMusic.Persistance.Contexts;
 
 namespace re_do_music.MVC.Controllers
 {
+
     public class BrandController : Controller
     {
         private readonly ReDoMusicDbContext _context;
@@ -19,12 +21,13 @@ namespace re_do_music.MVC.Controllers
             var brands = _context.Brands.ToList();
             return View(brands);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult AddBrand()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult AddBrand(string brandName, string brandDisplayText, string brandAddress)
         {
@@ -43,7 +46,7 @@ namespace re_do_music.MVC.Controllers
 
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult DeleteBrand(string id)
         {
