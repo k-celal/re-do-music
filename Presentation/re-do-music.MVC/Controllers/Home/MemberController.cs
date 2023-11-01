@@ -19,7 +19,7 @@ namespace re_do_music.MVC.Controllers.Home
         {
 
             await _signInManager.SignOutAsync();
-            return RedirectToAction("index","brand");
+            return RedirectToAction("index", "Instrument");
             
         }
         public async Task<IActionResult> AccessDenied(string ReturnUrl)
