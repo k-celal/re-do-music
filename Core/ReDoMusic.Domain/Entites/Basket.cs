@@ -10,14 +10,11 @@ namespace ReDoMusic.Domain.Entites
     public class Basket : EntityBase<Guid>
     {
         public List<BasketItem> Items { get; set; }
-        public decimal TotalPrice { get; set; }
     }
 
-    public class BasketItem
+    public class BasketItem: EntityBase<Guid>
     {
-        public Guid  ProductId { get; set; } 
-        public string ProductName { get; set; } 
-        public decimal Price { get; set; } 
+        public Instrument Instrument { get; set; }
         public int Quantity { get; set; } 
     }
 
