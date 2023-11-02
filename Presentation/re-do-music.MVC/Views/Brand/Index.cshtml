@@ -1,4 +1,6 @@
-﻿@using ReDoMusic.Domain.Entites;
+﻿@using Microsoft.AspNetCore.Identity;
+@using ReDoMusic.Domain.Entites;
+@inject UserManager<AppUser> _userManager
 @model List<Brand>
 
 <div class="container mt-3">
@@ -9,17 +11,33 @@
                 <th>Title</th>
                 <th>Desc.</th>
                 <th>Address</th>
-                <th>Delete</th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>Delete</th>
+                }
+                else 
+                {
+                    <th>Add to Basket</th>
+                }
             </tr>
         </thead>
         <tbody>
             @foreach (var brand in Model)
             {
+                
                 <tr>
                     <td>@brand.Name</td>
                     <td>@brand.DisplayText</td>
                     <td>@brand.Address</td>
-                    <td><a asp-action="DeleteBrand" asp-route-id="@brand.Id" class="btn btn-outline-danger">Delete</a></td>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td><a asp-controller="Brand" asp-action="DeleteBrand" asp-route-id="@brand.Id" class="btn btn-outline-info">Delete</a></td>
+                    }
+                    else 
+                    {
+                        <td><a href="#" class="btn btn-outline-success">Add to Basket</a></td>
+                    }
                 </tr>
             }
         </tbody>
