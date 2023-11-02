@@ -23,6 +23,7 @@ namespace ReDoMusic.Persistance.Contexts
         public ReDoMusicDbContext() { }
         public DbSet<Instrument> Instruments { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         public DbSet<Basket> Baskets { get; set; }
 
