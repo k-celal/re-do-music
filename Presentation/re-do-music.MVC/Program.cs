@@ -5,6 +5,7 @@ using ReDoMusic.Domain.Entites;
 using ReDoMusic.Persistance.Contexts;
 using RedoMusic.Persistence;
 using re_do_music.MVC.TagHelpers;
+using System.Security.Claims;
 
 namespace re_do_music.MVC
 {
@@ -36,6 +37,20 @@ namespace re_do_music.MVC
                 opt.SlidingExpiration = true;
             });
             // Diðer hizmetleri ekleyin
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminPolicy", policy =>
+                {
+                    policy.RequireRole("Admin");
+                });
+
+                options.AddPolicy("UserPolicy", policy =>
+                {
+                    policy.RequireRole("User");
+                });
+
+            });
+
 
         }
 
@@ -67,8 +82,9 @@ namespace re_do_music.MVC
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Brand}/{action=Index}/{id?}");
+                    pattern: "{controller=Instrument}/{action=Index}/{id?}");
             });
+            
         }
         public static void Main(string[] args)
         {
