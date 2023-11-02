@@ -24,6 +24,8 @@ namespace ReDoMusic.Persistance.Contexts
         public DbSet<Instrument> Instruments { get; set; }
         public DbSet<Brand> Brands { get; set; }
 
+        public DbSet<Basket> Baskets { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(Configurations.GetString("ConnectionStrings:PostgreSQL"));
