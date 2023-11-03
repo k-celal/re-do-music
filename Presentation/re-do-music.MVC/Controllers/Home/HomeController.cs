@@ -3,17 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using re_do_music.MVC.ViewModels;
 using ReDoMusic.Domain.Entites;
 using re_do_music.MVC.Extensions;
+using Microsoft.EntityFrameworkCore;
+using ReDoMusic.Persistance.Contexts;
+
 namespace re_do_music.MVC.Controllers.Home
 {
     public class HomeController : Controller
     {
         private readonly UserManager<AppUser> _UserManager;
         private readonly SignInManager<AppUser> _signInManager;
-
-        public HomeController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        private readonly ReDoMusicDbContext _context;
+        public HomeController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ReDoMusicDbContext context)
         {
             _UserManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -31,6 +35,35 @@ namespace re_do_music.MVC.Controllers.Home
         public IActionResult SignIn()
         {
             return View();
+        }
+        [HttpGet]
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Contact(ContactModel contactModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(contactModel);
+            }
+
+            var contactMessage = new ContactMessage
+            {
+                Id = Guid.NewGuid(),
+                Name = contactModel.Name,
+                Email = contactModel.Email,
+                Message = contactModel.Message,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            // Entity Framework veya veri erişim yönteminize göre veriyi veritabanına kaydedin.
+            _context.ContactMessages.Add(contactMessage);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Instrument");
         }
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpViewModel request)
@@ -70,7 +103,7 @@ namespace re_do_music.MVC.Controllers.Home
 
             if (signInResult.Succeeded)
             {
-                await _UserManager.AddToRoleAsync(hasUser, "User");
+
                 return Redirect(returnUrl);
             }
 
