@@ -18,7 +18,7 @@ namespace re_do_music.MVC.Controllers
         }
         public IActionResult Index()
         {
-            var orders = _context.Orders.ToList();
+            var orders = _context.Orders.Include(o => o.Customer).ToList();
             return View(orders);
         }
         public IActionResult OrderSuccess()
