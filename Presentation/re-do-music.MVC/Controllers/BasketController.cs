@@ -43,31 +43,38 @@ namespace re_do_music.MVC.Controllers
         {
             var basket = HttpContext.Session.Get<Basket>("Basket");
             var instrument = _context.Instruments.Include(x => x.Brand).FirstOrDefault(x => x.Id == productId);
+
             if (basket == null)
             {
                 basket = new Basket
                 {
                     Id = Guid.NewGuid(),
                     Items = new List<BasketItem>(),
-
                 };
+
+                _context.Baskets.Add(basket);
             }
 
-            var basketItem = new BasketItem
+            var basketItem = basket.Items.FirstOrDefault(x => x.Instrument.Id == productId);
+
+            if (basketItem == null)
             {
-                Id = Guid.NewGuid(), // You might need to set the Id for the item.
-                Instrument = instrument,
-                Quantity = quantity
-            };
+                basketItem = new BasketItem
+                {
+                    Id = Guid.NewGuid(),
+                    Instrument = instrument,
+                    Quantity = quantity
+                };
 
-            _context.BasketItems.Add(basketItem);
-
-            basket.Items.Add(basketItem);
+                _context.BasketItems.Add(basketItem);
+                basket.Items.Add(basketItem);
+            }
+            else
+            {
+                basketItem.Quantity += quantity;
+            }
 
             HttpContext.Session.Set("Basket", basket);
-
-            _context.Baskets.Add(basket);
-
             _context.SaveChanges();
 
             return RedirectToAction("Index");
