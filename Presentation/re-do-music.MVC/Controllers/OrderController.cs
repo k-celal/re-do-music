@@ -21,6 +21,10 @@ namespace re_do_music.MVC.Controllers
             var orders = _context.Orders.ToList();
             return View(orders);
         }
+        public IActionResult OrderSuccess()
+        {
+            return View();
+        }
        
         [HttpGet]
         public IActionResult AddOrder()
@@ -75,8 +79,8 @@ namespace re_do_music.MVC.Controllers
                 ShippingAddress= orderShippingAddress,
                 User = user
             };
-            
-            return View(viewModel);
+
+            return RedirectToAction("OrderSuccess");
         }
 
         [HttpGet]
