@@ -1,38 +1,95 @@
-﻿@model ReDoMusic.Domain.Entites.Order
-
-@{
-    ViewData["Title"] = "AddOrder";
-}
-
+﻿@model re_do_music.MVC.ViewModels.BasketAndOrderViewModel
+@using ReDoMusic.Domain.Enums;
 <h1>AddOrder</h1>
 
 <h4>Order</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddOrder">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ShippingAddress" class="control-label"></label>
-                <input asp-for="ShippingAddress" class="form-control"/>
-                <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+    <div class="col-md-6">
+        <div class="container mt-3">
+            @if (Model.Basket.Items.Count > 0)
+            {
+                decimal total_price = 0;
+                <h2>Delivery Information</h2>
+                <form asp-action="AddOrder" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="ShippingAddress" class="control-label">Shipping Address:</label>
+                        <input name="orderShippingAddress" class="form-control" />
+                        <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Payment Method:</label>
+                        <select name="orderPaymentMethod" class="form-select">
+                            @foreach (var paymentMethod in Enum.GetValues(typeof(Payment)))
+                            {
+                                <option value="@paymentMethod">@paymentMethod</option>
+                            }
+                        </select>
+                        <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input  type="submit" value="AddOrder" class="btn btn-primary" />
+                    </div>
+                </form>
+                 <table class="table table-white table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Basket.Items)
+                                {
+                                    <tr>
+                                        <td>@item.Instrument.Name</td>
+                                        <td>@item.Instrument.Price</td>
+                                        <td>@item.Quantity</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                            @foreach (var item in Model.Basket.Items)
+                            {
+                                total_price += item.Instrument.Price;
+                            }
+                        <h3>Total Price: @total_price &#x20BA;</h3>
+            }
+            else
+            {
+                <p>Your basket is empty.</p>
+            }
+            
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="container mt-3">
+            <h2>User Information</h2>
+            <div class="row mb-3">
+                <div class="col-md-4 col-form-label">Username :</div>
+                <div class="col-sm-8">
+                    @Model.User.UserName
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="PaymentMethod" class="control-label"></label>
-                <select asp-for="PaymentMethod" class="form-control" placeholder="Enter Payment Method" name="orderPaymentMethod"></select>
-                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+            <div class="row mb-3">
+                <div class="col-md-4 col-form-label">Email :</div>
+                <div class="col-sm-8">
+                    @Model.User.Email
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="row mb-3">
+                <div class="col-md-4 col-form-label">Phone :</div>
+                <div class="col-sm-8">
+                    @Model.User.PhoneNumber
+                </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

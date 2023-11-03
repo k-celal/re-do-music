@@ -21,7 +21,6 @@ namespace re_do_music.MVC
             {
                 options.UseNpgsql(Configurations.GetString("ConnectionStrings:PostgreSQL"));
             });
-
             services.AddIdentity<AppUser, AppRole>()
             .AddEntityFrameworkStores<ReDoMusicDbContext>()
               .AddDefaultTokenProviders();
@@ -35,6 +34,7 @@ namespace re_do_music.MVC
                 opt.Cookie = cookieBuilder;
                 opt.ExpireTimeSpan = TimeSpan.FromDays(1);
                 opt.SlidingExpiration = true;
+                
             });
             // Diðer hizmetleri ekleyin
             services.AddAuthorization(options =>
@@ -50,6 +50,12 @@ namespace re_do_music.MVC
                 });
 
             });
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Session süresi ayarlanabilir
+            });
+            services.AddSingleton<Basket>();
+            services.AddHttpContextAccessor();
 
 
         }
@@ -68,6 +74,9 @@ namespace re_do_music.MVC
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSession(); // UseSession, UseRouting ve UseAuthorization'dan önce çaðrýlmalýdýr.
+
             app.UseRouting();
             app.UseAuthorization();
 
@@ -78,14 +87,15 @@ namespace re_do_music.MVC
                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
             });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Instrument}/{action=Index}/{id?}");
             });
-            
         }
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);

@@ -40,7 +40,15 @@
                     }
                     else
                     {
-                        <td><a href="#" class="btn btn-outline-success">Add to Cart</a></td>
+                        <td>
+                            <a asp-controller="Basket"
+                               asp-action="AddToBasket"
+                               asp-route-productId="@instrument.Id"
+                               asp-route-quantity=1
+                               class="btn btn-outline-info">
+                                Add To Basket
+                            </a>
+                        </td>
                     }
                 </tr>
             }

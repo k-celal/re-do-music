@@ -44,6 +44,7 @@ namespace re_do_music.MVC.Controllers.Home
                 new() { UserName = request.UserName, Email = request.Email, PhoneNumber = request.Phone },
                 password: request.PasswordConfirm);
 
+
             if (identityResult.Succeeded)
             {
                 TempData["SuccessMessage"] = "Üyelik kayıt işlemi başarıyla gerçekleşmiştir.";
@@ -68,7 +69,8 @@ namespace re_do_music.MVC.Controllers.Home
             var signInResult = await _signInManager.PasswordSignInAsync(hasUser, model.Password, model.RememberMe, false);
 
             if (signInResult.Succeeded)
-            { 
+            {
+                await _UserManager.AddToRoleAsync(hasUser, "User");
                 return Redirect(returnUrl);
             }
 

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,6 +20,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\ReDoMusic.Domain\ReDoMusic.Domain.csproj" />
     <ProjectReference Include="..\..\Infrastructure\ReDoMusic.Persistance\ReDoMusic.Persistance.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
