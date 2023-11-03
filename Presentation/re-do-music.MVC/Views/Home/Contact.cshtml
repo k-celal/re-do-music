@@ -1,0 +1,45 @@
+﻿@using re_do_music.MVC.ViewModels;
+@model ContactModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim Sayfası</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="contact-container">
+        <div class="box has-background-white-bis has-text-centered p-6 form-container">
+            <h1 class="title is-size-2">İletişim</h1>
+            <form method="post">
+                <div class="field">
+                    <label class="label">Adınız Soyadınız</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Adınız Soyadınız" asp-for="Name">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">E-posta Adresi</label>
+                    <div class="control">
+                        <input class="input" type="email" placeholder="E-posta Adresiniz" asp-for="Email">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Mesajınız</label>
+                    <div class="control">
+                        <textarea class="textarea" placeholder="Mesajınız" asp-for="Message"></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Gönder</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

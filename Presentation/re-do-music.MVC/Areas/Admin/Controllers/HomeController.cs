@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using re_do_music.MVC.Areas.Admin.Models;
 using ReDoMusic.Domain.Entites;
+using ReDoMusic.Persistance.Contexts;
 
 namespace re_do_music.MVC.Areas.Admin.Controllers
 {
@@ -12,15 +13,18 @@ namespace re_do_music.MVC.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly ReDoMusicDbContext _context;
 
-        public HomeController(UserManager<AppUser> userManager)
+
+        public HomeController(UserManager<AppUser> userManager, ReDoMusicDbContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
         public IActionResult Index()
         {
             return View();
-        }
+        } 
         public async Task<IActionResult> UserList()
         {
             var userList = await _userManager.Users.ToListAsync();
@@ -51,5 +55,24 @@ namespace re_do_music.MVC.Areas.Admin.Controllers
 
             return View(userViewModelList);
         }
+        [HttpGet]
+        public IActionResult ContactMessages()
+        {
+            var contactMessages =  _context.ContactMessages.ToList();
+            return View(contactMessages);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(string id)
+        {
+            var contact = _context.ContactMessages.Where(x => x.Id == Guid.Parse(id)).FirstOrDefault();
+
+            _context.ContactMessages.Remove(contact);
+
+            _context.SaveChanges();
+
+            return RedirectToAction("ContactMessages");
+        }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using re_do_music.MVC.ViewModels;
 using ReDoMusic.Domain.Entites;
@@ -16,10 +17,23 @@ namespace re_do_music.MVC.Controllers
         {
             _context = new();
         }
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
-            var orders = _context.Orders.Include(o => o.Customer).ToList();
+            var orders = _context.Orders.Include(o=>o.OrderItems).ThenInclude(o=>o.Items).ThenInclude(o=>o.Instrument).Include(o => o.Customer).ToList();
             return View(orders);
+        }
+        public IActionResult UserOrders()
+        {
+            string userId = User.Identity.Name;
+
+            // Belirli bir kullanıcının siparişlerini getir
+            var userOrders = _context.Orders
+                .Include(o => o.OrderItems).ThenInclude(o => o.Items).ThenInclude(o => o.Instrument).Include(o => o.Customer)
+                .Where(o => o.Customer.UserName == userId)
+                .ToList();
+
+            return View(userOrders);
         }
         public IActionResult OrderSuccess()
         {
@@ -79,7 +93,7 @@ namespace re_do_music.MVC.Controllers
                 ShippingAddress= orderShippingAddress,
                 User = user
             };
-
+            HttpContext.Session.Remove("Basket");
             return RedirectToAction("OrderSuccess");
         }
 
