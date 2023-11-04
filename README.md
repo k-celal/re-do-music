@@ -102,10 +102,10 @@ Bu projede admin ve kullanıcı için ayrı ayrı kayıt olma ve giriş yapma ö
  - Admin özellikleri ve adminin kullanabileceği paneli tasarladım. Bunlar için rolleri ayarladım.
  - Instrument entity oluşturup InstrumentController’ı yazdım. 
  - BasketController'ın son halini yazdım ve BasketView ekledim.
- - "Giriş yap" "kayıt ol" gibi özellikler için birçok controller ve model oluşturdum. T
+ - "Giriş yap" "kayıt ol" gibi özellikler için birçok controller ve model oluşturdum. 
  - Tüm bu işlemleri görüntüleyebilmemizi sağlayan view’ları ekledim. 
 
-## Hatice Develi
+## Hatice Deveci
 Bu projede sipariş özelliğini oluşturmakla görevliydim.
 - Order entity oluşturdum. Bu entity içerisinde Customer, ShippingAddress, PaymentMethod, OrderDate, Status ve  OrderItems property'leri bulunuyor.
 - Ödeme türünü ve sipariş durumunu kullanıcıların seçimini kolaylıkla yapabilmesi adına enum olarak oluşturdum.
